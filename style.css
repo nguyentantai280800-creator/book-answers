@@ -87,18 +87,23 @@ button {
 }
 
 .answerBox {
-  background: white;
-  border-radius: 16px;
-  padding: 18px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  background: transparent;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
 }
 
 .answerBox img {
   display: block;
-  width: 100%;
-  max-width: 760px;
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
   margin: 0 auto;
-  border-radius: 10px;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  clip-path: none !important;
+  object-fit: contain !important;
 }
 
 #loginMsg {
