@@ -40,6 +40,10 @@ button {
   font-size: 15px;
 }
 
+button:hover {
+  opacity: 0.95;
+}
+
 .hidden {
   display: none;
 }
@@ -87,10 +91,11 @@ button {
 }
 
 .answerBox {
-  background: transparent;
+  background: #ffffff;
   border-radius: 0;
-  padding: 0;
-  box-shadow: none;
+  padding: 18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  overflow: auto;
 }
 
 .answerBox img {
@@ -100,9 +105,45 @@ button {
   height: auto;
   margin: 0 auto;
   border-radius: 0;
+  background: #ffffff;
+}
+
+.answerMsg {
+  margin-top: 14px;
+  color: #d22;
+  font-size: 14px;
+  word-break: break-word;
 }
 
 #loginMsg {
   color: #d22;
   min-height: 20px;
+}
+
+.contactBox {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #e3e7f0;
+  text-align: center;
+}
+
+.contactBox h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.contactBox p {
+  margin: 0 0 8px;
+  color: #555;
+  font-size: 14px;
+}
+
+.contactBox a {
+  color: #5b63ff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contactBox a:hover {
+  text-decoration: underline;
 }
