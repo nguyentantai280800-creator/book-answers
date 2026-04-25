@@ -1,0 +1,10 @@
+{
+  "books": [
+    {
+      "id": "rn-js-01",
+      "title": "RN-JS-01",
+      "codeHash": "7d1f0a4f6d7d5e6a1a2b3c4d5e6f7081928374655647382910abcdef12345678",
+      "data": "assets/rn-js-01.json"
+    }
+  ]
+}
