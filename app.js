@@ -11,11 +11,12 @@ const els = {
   backBtn: document.getElementById("backBtn"),
   answerTitle: document.getElementById("answerTitle"),
   answerImg: document.getElementById("answerImg"),
+  answerMsg: document.getElementById("answerMsg")
 };
 
+let booksIndex = [];
 let currentBook = null;
 let allItems = [];
-let booksIndex = [];
 
 init();
 
@@ -25,15 +26,26 @@ async function init() {
     const data = await res.json();
     booksIndex = data.books || [];
   } catch (err) {
-    els.loginMsg.textContent = "Failed to load book index.";
+    els.loginMsg.textContent = "Failed to load book list.";
   }
 }
 
 els.openBookBtn.addEventListener("click", openBook);
+
+els.bookCodeInput.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    openBook();
+  }
+});
+
 els.searchInput.addEventListener("input", renderFilteredGrid);
+
 els.backBtn.addEventListener("click", () => {
   els.answerView.classList.add("hidden");
   els.bookView.classList.remove("hidden");
+  els.answerMsg.classList.add("hidden");
+  els.answerMsg.textContent = "";
+  els.answerImg.style.display = "block";
 });
 
 async function sha256(text) {
@@ -44,7 +56,7 @@ async function sha256(text) {
 }
 
 async function openBook() {
-  const code = els.bookCodeInput.value.trim();
+  const code = els.bookCodeInput.value.trim().toUpperCase();
 
   if (!code) {
     els.loginMsg.textContent = "Please enter your book code.";
@@ -55,7 +67,10 @@ async function openBook() {
 
   try {
     const codeHash = await sha256(code);
-    const bookMeta = booksIndex.find(b => b.codeHash === codeHash);
+
+    const bookMeta = booksIndex.find(
+      b => String(b.codeHash).trim().toLowerCase() === codeHash.toLowerCase()
+    );
 
     if (!bookMeta) {
       els.loginMsg.textContent = "Invalid book code.";
@@ -63,7 +78,9 @@ async function openBook() {
     }
 
     const res = await fetch(bookMeta.data, { cache: "no-store" });
-    if (!res.ok) throw new Error("Cannot load book data");
+    if (!res.ok) {
+      throw new Error("Cannot load book data.");
+    }
 
     currentBook = await res.json();
     allItems = [];
@@ -82,11 +99,12 @@ async function openBook() {
     }
 
     els.bookTitle.textContent = currentBook.bookTitle || bookMeta.title || "Book Answers";
+    els.searchInput.value = "";
+
     els.loginView.classList.add("hidden");
     els.answerView.classList.add("hidden");
     els.bookView.classList.remove("hidden");
 
-    els.searchInput.value = "";
     renderFilteredGrid();
   } catch (err) {
     els.loginMsg.textContent = "Failed to open this book.";
@@ -94,13 +112,24 @@ async function openBook() {
 }
 
 function renderFilteredGrid() {
-  const q = els.searchInput.value.trim().toLowerCase();
+  const q = els.searchInput.value.trim();
 
-  const filtered = allItems.filter(item => {
-    return String(item.n).includes(q) || String(item.code).toLowerCase().includes(q);
-  });
+  let filtered = allItems;
+
+  if (q !== "") {
+    filtered = allItems.filter(item => {
+      return String(item.n) === q || String(item.code) === q;
+    });
+  }
 
   els.grid.innerHTML = "";
+
+  if (filtered.length === 0) {
+    const div = document.createElement("div");
+    div.textContent = "No puzzle found.";
+    els.grid.appendChild(div);
+    return;
+  }
 
   for (const item of filtered) {
     const btn = document.createElement("button");
@@ -114,7 +143,24 @@ function renderFilteredGrid() {
 
 function showAnswer(item) {
   els.answerTitle.textContent = `Puzzle ${item.n}`;
+  els.answerMsg.classList.add("hidden");
+  els.answerMsg.textContent = "";
+  els.answerImg.style.display = "block";
+
+  els.answerImg.onload = function() {
+    els.answerMsg.classList.add("hidden");
+    els.answerMsg.textContent = "";
+    els.answerImg.style.display = "block";
+  };
+
+  els.answerImg.onerror = function() {
+    els.answerImg.style.display = "none";
+    els.answerMsg.textContent = `Cannot load image: ${item.img}`;
+    els.answerMsg.classList.remove("hidden");
+  };
+
   els.answerImg.src = item.img;
+
   els.bookView.classList.add("hidden");
   els.answerView.classList.remove("hidden");
 }
