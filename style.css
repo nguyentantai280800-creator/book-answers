@@ -88,70 +88,21 @@ button {
 
 .answerBox {
   background: transparent;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  box-shadow: none !important;
-  overflow: visible !important;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
 }
 
 .answerBox img {
   display: block;
-  width: auto !important;
-  max-width: 100% !important;
-  height: auto !important;
+  width: auto;
+  max-width: 100%;
+  height: auto;
   margin: 0 auto;
-  border-radius: 0 !important;
-  overflow: visible !important;
-  clip-path: none !important;
-  object-fit: contain !important;
+  border-radius: 0;
 }
 
 #loginMsg {
   color: #d22;
   min-height: 20px;
-}
-
-.contactBox {
-  margin-top: 24px;
-  padding-top: 18px;
-  border-top: 1px solid #e3e7f0;
-  text-align: center;
-}
-
-.contactBox h3 {
-  margin: 0 0 8px;
-  font-size: 18px;
-}
-
-.contactBox p {
-  margin: 0 0 8px;
-  color: #555;
-  font-size: 14px;
-}
-
-.contactBox a {
-  color: #5b63ff;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.contactBox a:hover {
-  text-decoration: underline;
-}
-
-.siteFooter {
-  text-align: center;
-  padding: 20px;
-  color: #555;
-  font-size: 14px;
-}
-
-.siteFooter a {
-  color: #5b63ff;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.siteFooter a:hover {
-  text-decoration: underline;
 }
